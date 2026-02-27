@@ -1,0 +1,187 @@
+/* home.css - Dark Glassmorphism UI */
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* ================= NAVBAR ================= */
+
+.navBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 30px;
+
+  /* Dark blue glass background */
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+
+  backdrop-filter: blur(12px);
+  color: white;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.navBar h2 {
+  margin: 0;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+/* Right actions */
+.navActions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* History button */
+.historyBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  transition: 0.3s ease;
+  color: white;
+}
+
+.historyBtn span {
+  font-size: 14px;
+}
+
+.historyBtn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Logout button */
+.logoutBtn {
+  border-radius: 20px !important;
+  color: white !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  padding: 6px 16px !important;
+  text-transform: none !important;
+  cursor: pointer;
+  background: transparent !important;
+}
+
+.logoutBtn:hover {
+  background: rgba(255, 255, 255, 0.3) !important;
+}
+
+/* ================= MAIN ================= */
+
+.meetContainer {
+  min-height: calc(100vh - 70px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 50px;
+  background: linear-gradient(135deg, #13193a, #18022e);
+}
+
+/* Left panel */
+.leftPanel {
+  flex: 1;
+  padding: 30px;
+  color: white;
+}
+
+.leftPanel h2 {
+  font-size: 32px;
+  margin-bottom: 25px;
+  line-height: 1.4;
+}
+
+/* Join row */
+.joinRow {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+/* TextField glass */
+.MuiTextField-root {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+}
+
+.MuiInputBase-input {
+  color: white !important;
+}
+
+.MuiInputLabel-root {
+  color: #e5e7eb !important;
+}
+
+/* Join button */
+.joinBtn {
+  background: rgba(255, 255, 255, 0.25) !important;
+  padding: 10px 22px !important;
+  border-radius: 12px !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  color: white !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  transition: 0.3s ease;
+  cursor: pointer;
+}
+
+.joinBtn:hover {
+  background: rgba(255, 255, 255, 0.4) !important;
+  transform: scale(1.05);
+}
+
+/* Right panel */
+.rightPanel {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.rightPanel img {
+  width: 420px;
+  max-width: 100%;
+  border-radius: 16px;
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Floating animation */
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 900px) {
+  .meetContainer {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .rightPanel img {
+    width: 300px;
+    margin-top: 30px;
+  }
+
+  .leftPanel h2 {
+    font-size: 24px;
+  }
+
+  .joinRow {
+    justify-content: center;
+  }
+}

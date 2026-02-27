@@ -1,0 +1,42 @@
+/* Authentication.css */
+
+/* Dark background for Sign In / Sign Up panel */
+.auth-form-bg {
+  background-color: #230b31 !important; /* dark theme */
+  color: #ffffff;
+}
+
+/* Make input labels visible on dark bg */
+.auth-form-bg label {
+  color: #cccccc !important;
+}
+
+/* Input text color */
+.auth-form-bg input {
+  color: #ffffff !important;
+}
+
+/* Placeholder color */
+.auth-form-bg input::placeholder {
+  color: #aaaaaa;
+  opacity: 1;
+}
+
+/* Border color */
+.auth-form-bg .MuiOutlinedInput-root fieldset {
+  border-color: #555;
+}
+
+.auth-form-bg .MuiOutlinedInput-root:hover fieldset {
+  border-color: #90caf9;
+}
+
+.auth-form-bg .MuiOutlinedInput-root.Mui-focused fieldset {
+  border-color: #90caf9;
+}
+
+/* Buttons spacing look nicer */
+.auth-form-bg button {
+  margin-top: 8px;
+  color: white;
+}
