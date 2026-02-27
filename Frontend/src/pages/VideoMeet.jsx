@@ -13,11 +13,9 @@ import MicOffIcon from "@mui/icons-material/MicOff";
 import ScreenShareIcon from "@mui/icons-material/ScreenShare";
 import StopScreenShareIcon from "@mui/icons-material/StopScreenShare";
 import ChatIcon from "@mui/icons-material/Chat";
-// import server from "../environment";
+import server from "../environment.js";
 
-// const server_url = server;
-
-const server_url = "http://localhost:8000";
+const server_url = server;
 
 var connections = {};
 
@@ -530,55 +528,244 @@ export default function VideoMeetComponent() {
   return (
     <div>
       {askForUsername === true ? (
-        <div>
-          <h2>Enter into Lobby </h2>
+        // <div>
+        //   <h2>Enter into Lobby </h2>
+        //   <TextField
+        //     id="outlined-basic"
+        //     label="Username"
+        //     value={username}
+        //     onChange={(e) => setUsername(e.target.value)}
+        //     variant="outlined"
+        //   />
+        //   <Button variant="contained" onClick={connect}>
+        //     Connect
+        //   </Button>
+
+        //   <div>
+        //     <video ref={localVideoref} autoPlay muted></video>
+        //   </div>
+        // </div>
+        <div
+          style={{
+            minHeight: "100vh",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            background: "linear-gradient(135deg, #0f172a, #1e293b)",
+            color: "white",
+            gap: "16px",
+          }}
+        >
+          <h2
+            style={{
+              fontSize: "26px",
+              fontWeight: "600",
+              marginBottom: "10px",
+              letterSpacing: "1px",
+            }}
+          >
+            Enter into Lobby
+          </h2>
+
           <TextField
             id="outlined-basic"
             label="Username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             variant="outlined"
+            sx={{
+              width: "300px",
+
+              "& .MuiOutlinedInput-root": {
+                backgroundColor: "rgba(255,255,255,0.05)",
+                borderRadius: "10px",
+                color: "white",
+
+                "& fieldset": {
+                  borderColor: "#3b82f6",
+                },
+                "&:hover fieldset": {
+                  borderColor: "#60a5fa",
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: "#6366f1",
+                },
+              },
+
+              "& .MuiInputLabel-root": {
+                color: "#cbd5f5",
+              },
+              "& .MuiInputLabel-root.Mui-focused": {
+                color: "#93c5fd",
+              },
+
+              "& input": {
+                color: "white",
+              },
+            }}
           />
-          <Button variant="contained" onClick={connect}>
-            Connect
+
+          <Button
+            variant="contained"
+            onClick={connect}
+            style={{
+              width: "300px",
+              padding: "12px",
+              borderRadius: "10px",
+              fontWeight: "bold",
+              background: "linear-gradient(90deg, #6366f1, #3b82f6)",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
+            }}
+          >
+            CONNECT
           </Button>
 
-          <div>
-            <video ref={localVideoref} autoPlay muted></video>
+          <div
+            style={{
+              marginTop: "20px",
+              padding: "10px",
+              borderRadius: "14px",
+              background: "rgba(255,255,255,0.08)",
+              backdropFilter: "blur(6px)",
+            }}
+          >
+            <video
+              ref={localVideoref}
+              autoPlay
+              muted
+              style={{
+                width: "320px",
+                height: "220px",
+                borderRadius: "12px",
+                objectFit: "cover",
+                border: "2px solid #3b82f6",
+                boxShadow: "0 4px 15px rgba(0,0,0,0.4)",
+              }}
+            />
           </div>
         </div>
       ) : (
         <div className={styles.meetVideoContainer}>
           {showModal ? (
-            <div className={styles.chatRoom}>
-              <div className={styles.chatContainer}>
-                <h1>Chat</h1>
+            // <div className={styles.chatRoom}>
+            //   <div className={styles.chatContainer}>
+            //     <h1>Chat</h1>
 
-                <div className={styles.chattingDisplay}>
+            //     <div className={styles.chattingDisplay}>
+            //       {messages.length !== 0 ? (
+            //         messages.map((item, index) => {
+            //           console.log(messages);
+            //           return (
+            //             <div style={{ marginBottom: "20px" }} key={index}>
+            //               <p style={{ fontWeight: "bold" }}>{item.sender}</p>
+            //               <p>{item.data}</p>
+            //             </div>
+            //           );
+            //         })
+            //       ) : (
+            //         <p>No Messages Yet</p>
+            //       )}
+            //     </div>
+
+            //     <div className={styles.chattingArea}>
+            //       <TextField
+            //         value={message}
+            //         onChange={(e) => setMessage(e.target.value)}
+            //         id="outlined-basic"
+            //         label="Enter Your chat"
+            //         variant="outlined"
+            //       />
+            //       <Button variant="contained" onClick={sendMessage}>
+            //         Send
+            //       </Button>
+            //     </div>
+            //   </div>
+            // </div>
+            <div
+              style={{
+                position: "absolute", // float on top
+                top: 0,
+                right: 0,
+                height: "100%",
+                width: "380px",
+                background: "rgba(255, 255, 255, 0.08)",
+                borderRadius: "16px 0 0 16px", // only left corners rounded
+                boxShadow: "-8px 0 25px rgba(0,0,0,0.5)",
+                zIndex: 1, // stay above the video
+                display: "flex",
+                flexDirection: "column",
+                overflow: "hidden", // inner scroll only
+              }}
+            >
+              <div
+                style={{
+                  flex: 1,
+                  display: "flex",
+                  flexDirection: "column",
+                  padding: "16px",
+                  color: "white",
+                }}
+              >
+                <h1 style={{ textAlign: "center", marginBottom: "10px" }}>
+                  Chat
+                </h1>
+
+                <div
+                  style={{
+                    flex: 1,
+                    overflowY: "auto",
+                    padding: "10px",
+                    borderRadius: "12px",
+                    background: "rgba(0,0,0,0.3)",
+                    marginBottom: "10px",
+                  }}
+                >
                   {messages.length !== 0 ? (
-                    messages.map((item, index) => {
-                      console.log(messages);
-                      return (
-                        <div style={{ marginBottom: "20px" }} key={index}>
-                          <p style={{ fontWeight: "bold" }}>{item.sender}</p>
-                          <p>{item.data}</p>
-                        </div>
-                      );
-                    })
+                    messages.map((item, index) => (
+                      <div key={index} style={{ marginBottom: "20px" }}>
+                        <p style={{ fontWeight: "bold" }}>{item.sender}</p>
+                        <p>{item.data}</p>
+                      </div>
+                    ))
                   ) : (
-                    <p>No Messages Yet</p>
+                    <p style={{ textAlign: "center", opacity: 0.7 }}>
+                      No Messages Yet
+                    </p>
                   )}
                 </div>
 
-                <div className={styles.chattingArea}>
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "10px",
+                  }}
+                >
                   <TextField
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    id="outlined-basic"
                     label="Enter Your chat"
                     variant="outlined"
+                    sx={{
+                      flex: 1,
+                      "& .MuiOutlinedInput-root": {
+                        backgroundColor: "rgba(255,255,255,0.05)",
+                        borderRadius: "10px",
+                        color: "white",
+                      },
+                      "& .MuiInputLabel-root": { color: "#cbd5f5" },
+                      "& input": { color: "white" },
+                    }}
                   />
-                  <Button variant="contained" onClick={sendMessage}>
+                  <Button
+                    variant="contained"
+                    onClick={sendMessage}
+                    style={{
+                      borderRadius: "10px",
+                      background: "#3b82f6",
+                      fontWeight: "bold",
+                    }}
+                  >
                     Send
                   </Button>
                 </div>
