@@ -61,7 +61,14 @@ export default function VideoMeetComponent() {
   // if(isChrome() === false) {
 
   // }
+  const messagesEndRef = useRef(null);
 
+  useEffect(() => {
+    messagesEndRef.current?.scrollTo({
+      top: messagesEndRef.current.scrollHeight,
+      behavior: "smooth",
+    });
+  }, [messages]);
   useEffect(() => {
     getPermissions();
   });
@@ -528,23 +535,6 @@ export default function VideoMeetComponent() {
   return (
     <div>
       {askForUsername === true ? (
-        // <div>
-        //   <h2>Enter into Lobby </h2>
-        //   <TextField
-        //     id="outlined-basic"
-        //     label="Username"
-        //     value={username}
-        //     onChange={(e) => setUsername(e.target.value)}
-        //     variant="outlined"
-        //   />
-        //   <Button variant="contained" onClick={connect}>
-        //     Connect
-        //   </Button>
-
-        //   <div>
-        //     <video ref={localVideoref} autoPlay muted></video>
-        //   </div>
-        // </div>
         <div
           style={{
             minHeight: "100vh",
@@ -648,127 +638,94 @@ export default function VideoMeetComponent() {
       ) : (
         <div className={styles.meetVideoContainer}>
           {showModal ? (
-            // <div className={styles.chatRoom}>
-            //   <div className={styles.chatContainer}>
-            //     <h1>Chat</h1>
-
-            //     <div className={styles.chattingDisplay}>
-            //       {messages.length !== 0 ? (
-            //         messages.map((item, index) => {
-            //           console.log(messages);
-            //           return (
-            //             <div style={{ marginBottom: "20px" }} key={index}>
-            //               <p style={{ fontWeight: "bold" }}>{item.sender}</p>
-            //               <p>{item.data}</p>
-            //             </div>
-            //           );
-            //         })
-            //       ) : (
-            //         <p>No Messages Yet</p>
-            //       )}
-            //     </div>
-
-            //     <div className={styles.chattingArea}>
-            //       <TextField
-            //         value={message}
-            //         onChange={(e) => setMessage(e.target.value)}
-            //         id="outlined-basic"
-            //         label="Enter Your chat"
-            //         variant="outlined"
-            //       />
-            //       <Button variant="contained" onClick={sendMessage}>
-            //         Send
-            //       </Button>
-            //     </div>
-            //   </div>
-            // </div>
             <div
               style={{
-                position: "absolute", // float on top
+                position: "absolute",
                 top: 0,
                 right: 0,
                 height: "100%",
                 width: "380px",
                 background: "rgba(255, 255, 255, 0.08)",
-                borderRadius: "16px 0 0 16px", // only left corners rounded
+                borderRadius: "16px 0 0 16px",
                 boxShadow: "-8px 0 25px rgba(0,0,0,0.5)",
-                zIndex: 1, // stay above the video
+                zIndex: 1,
                 display: "flex",
                 flexDirection: "column",
-                overflow: "hidden", // inner scroll only
               }}
             >
-              <div
-                style={{
-                  flex: 1,
-                  display: "flex",
-                  flexDirection: "column",
-                  padding: "16px",
-                  color: "white",
-                }}
-              >
+              {/* Header */}
+              <div style={{ padding: "16px", color: "white" }}>
                 <h1 style={{ textAlign: "center", marginBottom: "10px" }}>
                   Chat
                 </h1>
+              </div>
 
-                <div
-                  style={{
+              {/* Scrollable Messages */}
+              <div
+                style={{
+                  flex: 1,
+                  overflowY: "auto",
+                  padding: "10px 16px",
+                  background: "rgba(0,0,0,0.3)",
+                  borderRadius: "12px",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "10px",
+                  color: "white",
+                  scrollbarWidth: "thin", // Firefox
+                  scrollbarColor: "rgba(255,255,255,0.3) transparent", // Firefox
+                }}
+                ref={messagesEndRef} // for autoscroll
+              >
+                {messages.length !== 0 ? (
+                  messages.map((item, index) => (
+                    <div key={index}>
+                      <p style={{ fontWeight: "bold" }}>{item.sender}</p>
+                      <p>{item.data}</p>
+                    </div>
+                  ))
+                ) : (
+                  <p style={{ textAlign: "center", opacity: 0.7 }}>
+                    No Messages Yet
+                  </p>
+                )}
+              </div>
+
+              {/* Input Box (fixed at bottom) */}
+              <div
+                style={{
+                  display: "flex",
+                  gap: "10px",
+                  padding: "16px",
+                }}
+              >
+                <TextField
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  label="Enter Your chat"
+                  variant="outlined"
+                  sx={{
                     flex: 1,
-                    overflowY: "auto",
-                    padding: "10px",
-                    borderRadius: "12px",
-                    background: "rgba(0,0,0,0.3)",
-                    marginBottom: "10px",
-                  }}
-                >
-                  {messages.length !== 0 ? (
-                    messages.map((item, index) => (
-                      <div key={index} style={{ marginBottom: "20px" }}>
-                        <p style={{ fontWeight: "bold" }}>{item.sender}</p>
-                        <p>{item.data}</p>
-                      </div>
-                    ))
-                  ) : (
-                    <p style={{ textAlign: "center", opacity: 0.7 }}>
-                      No Messages Yet
-                    </p>
-                  )}
-                </div>
-
-                <div
-                  style={{
-                    display: "flex",
-                    gap: "10px",
-                  }}
-                >
-                  <TextField
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    label="Enter Your chat"
-                    variant="outlined"
-                    sx={{
-                      flex: 1,
-                      "& .MuiOutlinedInput-root": {
-                        backgroundColor: "rgba(255,255,255,0.05)",
-                        borderRadius: "10px",
-                        color: "white",
-                      },
-                      "& .MuiInputLabel-root": { color: "#cbd5f5" },
-                      "& input": { color: "white" },
-                    }}
-                  />
-                  <Button
-                    variant="contained"
-                    onClick={sendMessage}
-                    style={{
+                    "& .MuiOutlinedInput-root": {
+                      backgroundColor: "rgba(255,255,255,0.05)",
                       borderRadius: "10px",
-                      background: "#3b82f6",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    Send
-                  </Button>
-                </div>
+                      color: "white",
+                    },
+                    "& .MuiInputLabel-root": { color: "#cbd5f5" },
+                    "& input": { color: "white" },
+                  }}
+                />
+                <Button
+                  variant="contained"
+                  onClick={sendMessage}
+                  style={{
+                    borderRadius: "10px",
+                    background: "#3b82f6",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Send
+                </Button>
               </div>
             </div>
           ) : (
@@ -798,7 +755,17 @@ export default function VideoMeetComponent() {
               <></>
             )}
 
-            <Badge badgeContent={newMessages} max={999} color="orange">
+            <Badge
+              badgeContent={newMessages}
+              max={999}
+              color="primary" // can still use color for background
+              sx={{
+                "& .MuiBadge-badge": {
+                  color: "white", // text color
+                  backgroundColor: "#3b82f6", // optional: change badge bg
+                },
+              }}
+            >
               <IconButton
                 onClick={() => setModal(!showModal)}
                 style={{ color: "white" }}
